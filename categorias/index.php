@@ -35,8 +35,15 @@
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="http://tecedu.16mb.com/categorias">Jogos</a></li>
-                  <li><a href="http://tecedu.16mb.com/cadastrar">Busca</a></li>
+                  <li>
+                    <div class="input-group" style="width:200px; padding:6px 12px;">
+                      <input type="text" class="form-control" placeholder="Buscar jogos" style="margin-top:1px;">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default glyphicon glyphicon-search" type="button"></button>
+                      </span>
+                    </div><!-- /input-group -->
+
+                  </li>
                   <li><a href="http://tecedu.16mb.com/logout/index.php">Sair</a></li>
                 </ul>
               </div><!-- /.navbar-collapse -->
@@ -51,11 +58,6 @@
         <div class="page-header">
           <h1>Categorias</h1>
         </div>
-
-        <table class="table categorias">
-          <tr><td>Coordenação Motora</td> <td>Conhecimentos Matemáticos</td></tr>
-          <tr><td>Liderança</td></tr>
-        </table>
 
         <?php
         
@@ -80,25 +82,34 @@
           die("Connection failed: " . mysqli_connect_error());
         }
 
-        $sql = "SELECT u.id, u.email, u.nome FROM user u, relacao r WHERE u.id = r.id_aluno AND u.tipo = 'aluno' AND r.id_prof = $id_prof";
+        $sql = "SELECT DISTINCT t.id, t.nome FROM tag t, jogo_tags jt WHERE t.id = jt.id_tag GROUP BY jt.id_tag ORDER BY COUNT(*) DESC";
 
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
 
-          echo '<table class="table table-striped"> <tr> <th>Nome</th> <th>E-mail</th> <th>Acessar perfil</th></tr>';
+          $col = 1;
+          echo '<table class="table categorias">';
 
           while($row = $result->fetch_assoc()) {
-            echo "<tr> <td>" . $row["nome"]. "</td> <td> " . $row["email"]. "</td> <td> <a href='#'> Perfil</a> </td></tr>";
+            if($col == 1) {
+              echo "<tr> <td><a href='http://tecedu.16mb.com/jogos?cat=" . $row["id"] . "'>" . $row["nome"] . "</a></td>";
+              $col = 2;
+            } else {
+              echo "<td><a href='http://tecedu.16mb.com/jogos?cat=" . $row["id"] . "'>" . $row["nome"] . "</td> </tr>";
+              $col = 1;
+            }
           }
-
+          if($col == 1) {
+            echo "</tr>";
+          }
           echo '</table>';
         } else {
-          echo "<p>Você não possui alunos cadastrados.</p>";
+          echo "<p>Não há categorias registradas no momento.</p>";
         }
         $conn->close();
 
-          
+
         ?>
 
       </div>

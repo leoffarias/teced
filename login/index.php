@@ -54,7 +54,7 @@
         mysql_close();
 
         if($row["tipo"] == "aluno") {
-        header("Location: http://tecedu.16mb.com/aluno");
+        header("Location: http://tecedu.16mb.com/categorias");
       } else if ($row["tipo"] == "professor") {
         header("Location: http://tecedu.16mb.com/professor");
       }
