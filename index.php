@@ -15,6 +15,23 @@
     <![endif]-->
   </head>
   <body>
+
+        <?php
+        
+        session_start();
+
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+
+          if ($_SESSION['tipo'] == "professor") {
+          header("Location: http://tecedu.16mb.com/professor");
+        } else if ($_SESSION['tipo'] == "aluno") {
+          header("Location: http://tecedu.16mb.com/categorias");
+        }
+
+        } 
+
+        ?>
+
 <div class="pag capa">
 <header>
 

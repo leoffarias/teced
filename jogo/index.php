@@ -80,7 +80,7 @@
 
         $id_jogo = $_GET["id"];
 
-        $sql = "SELECT DISTINCT j.nome, j.img, j.desc, j.link FROM jogo j WHERE j.id = '$id_jogo' ";
+        $sql = "SELECT DISTINCT j.nome, j.img, j.descr, j.link FROM jogo j WHERE j.id = '$id_jogo' ";
 
         $result = $conn->query($sql);
 
@@ -88,9 +88,30 @@
 
         if ($row != "") {
           echo '<div class="page-header"> <h1>'.$row["nome"].'</h1> </div>';
-          echo '<p class="descricao-jogo">'.$row["desc"].'</p>';
+          echo '<p class="descricao-jogo">'.$row["descr"];
+
+          $sql2 = "SELECT t.nome, t.id FROM tag t, jogo_tags jt WHERE '$id_jogo' = jt.id_jogo AND t.id = jt.id_tag ";
+
+          $result2 = $conn->query($sql2);
+
+          if ($result2->num_rows > 0) {
+            echo "<br /><br />Habilidades envolvidas: ";
+            $col = 0;
+            while($row2 = $result2->fetch_assoc()) {
+              if($col == 0) {
+                echo "<a href='http://tecedu.16mb.com/jogos?cat=" . $row2["id"] . "'>" . $row2["nome"]. "</a>";
+                $col = 1;
+              } else {
+                echo ", <a href='http://tecedu.16mb.com/jogos?cat=" . $row2["id"] . "'>" .$row2["nome"] . "</a>";
+              }
+            }
+            echo ".";
+          }
+          echo '<br /><br /><br /><a class="link-jogar" target="_blank" href="'.$row["link"].'" ><button type="button" class="btn btn-success btn-jogar">Jogar</button></a></p>';
+          if($row['img'] != "") {
           echo "<img class='img-jogo' src='data:image/jpeg;base64,".base64_encode( $row['img'] )."' />";
-          echo '<a class="link-jogar" target="_blank" href="'.$row["link"].'" ><button type="button" class="btn btn-success btn-jogar">Jogar</button></a>';
+        }
+          
         } else {
           echo "<p>Jogo inexistente</p>";
         }

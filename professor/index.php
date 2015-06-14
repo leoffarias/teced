@@ -40,7 +40,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://tecedu.16mb.com/">TecEd</a>
+      <a class="navbar-brand" href="http://tecedu.16mb.com/">TecEdu</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -59,7 +59,7 @@
 
   </header>
       <div class="page-title">
-    <h1>TecEd<br /><small>Desenvolva habilidades jogando</small></h1>
+    <h1>TecEdu<br /><small>Desenvolva habilidades jogando</small></h1>
   </div>
 
   </div>

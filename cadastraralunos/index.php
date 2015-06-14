@@ -16,6 +16,20 @@
     </head>
     <body>
 
+            <?php
+
+      session_start();
+
+      if (!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
+
+        header("Location: http://tecedu.16mb.com/");
+
+      } else if ($_SESSION['tipo'] == "aluno") {
+
+        header("Location: http://tecedu.16mb.com/categorias");
+
+      } ?>
+
 <header>
 
     <nav class="navbar navbar-default">
@@ -51,14 +65,6 @@
 <div class="container">
 
       <?php
-
-      session_start();
-
-      if (!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
-
-        header("Location: http://tecedu.16mb.com/");
-
-      }
 
       $host = "mysql.hostinger.com.br";
       $database = "u160152407_teced";
