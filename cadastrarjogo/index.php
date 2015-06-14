@@ -83,8 +83,9 @@
         if($link[0] != 'h') {
           $link = "http://".$link;
         }
-        
+
         $desc=$_POST['desc'];
+
 
         $id_prof=$_SESSION['userid'];
 
@@ -93,74 +94,108 @@
           $sql = "INSERT INTO jogo (nome, link, descr) VALUES ('$nome', '$link', '$desc')";
 
           if ($conn->query($sql) === TRUE) {
-           
+            $id_jogo2 = mysqli_insert_id($conn);
+
+            $hab=$_POST['hab'];
+
+            $sql2 = "SELECT t.id FROM tag t WHERE t.nome = '$hab' ";
+
+            $result2 = $conn->query($sql2);
+
+            $row2 = mysqli_fetch_assoc($result2);
+
+        if ($row2 != "") { // Ja existe, apenas adiciona a relacao com o jogo
+
+          $id_tag2 = $row2["id"];
+          
+          $sql3 = "INSERT INTO jogo_tags (id_jogo, id_tag) VALUES ('$id_jogo2', '$id_tag2')";
+          
+          if ($conn->query($sql3) === TRUE) {
+
+           echo "<div class='alert alert-success' role='alert'>Jogo registrado com sucesso!</div>";
+
+         }
+
+        } else { // Nao existe, adiciona no bd e adiciona a relacao com o jogo
+          
+          $sql3 = "INSERT INTO tag (nome) VALUES ('$hab')";
+
+          if ($conn->query($sql3) === TRUE) {
+
+            $id_tag2 = mysqli_insert_id($conn);
+
+            $sql4 = "INSERT INTO jogo_tags (id_jogo, id_tag) VALUES ('$id_jogo2', '$id_tag2')";
+
+            if ($conn->query($sql4) === TRUE) {
+
+             echo "<div class='alert alert-success' role='alert'>Jogo registrado com sucesso!</div>";
+
+           }
+
+         }
+
+       }
+
+     } else {
+      echo "<div class='alert alert-danger' role='alert'>Houve um erro ao registrar o jogo</div>";
+    }
+  }
+
+
+  ?>
 
 
 
-           echo "<div class='alert alert-success' role='alert'>Aluno registrado com sucesso!</div>";
-           
-           
-
-         } else {
-          echo "<div class='alert alert-danger' role='alert'>Houve um erro ao registrar o aluno</div>";
-        }
-      }
 
 
-      ?>
+  <div class="page-header">
+    <h1>Cadastro</h1>
+  </div>
 
-      
-
-
-
-      <div class="page-header">
-        <h1>Cadastro</h1>
-      </div>
-
-      <div class="panel panel-primary">
-        <div class="panel-heading panel-cadastro">
-          <h2 class="panel-title">Cadastrar Aluno</h2>
+  <div class="panel panel-primary">
+    <div class="panel-heading panel-cadastro">
+      <h2 class="panel-title">Cadastrar Aluno</h2>
+    </div>
+    <div class="panel-body" style="display:none;">
+      <p><strong>Preencha o formulário abaixo:</strong></p><br />
+      <form method="post" action="http://tecedu.16mb.com/cadastraralunos/index.php">
+        <div class="form-group">
+          <label for="exampleInputNome1">Nome do aluno</label>
+          <input type="text" class="form-control" name="nome" id="exampleInputNome1" placeholder="Nome" required>
         </div>
-        <div class="panel-body" style="display:none;">
-          <p><strong>Preencha o formulário abaixo:</strong></p><br />
-          <form method="post" action="http://tecedu.16mb.com/cadastraralunos/index.php">
-            <div class="form-group">
-              <label for="exampleInputNome1">Nome do aluno</label>
-              <input type="text" class="form-control" name="nome" id="exampleInputNome1" placeholder="Nome" required>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">E-mail do aluno</label>
-              <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="E-mail" required>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Senha do aluno</label>
-              <input type="password" class="form-control" name="senha" id="exampleInputPassword1" placeholder="Senha" required>
-            </div>
-
-            <br />
-            <button type="submit" class="btn btn-success">Cadastrar</button>
-          </form>
-
+        <div class="form-group">
+          <label for="exampleInputEmail1">E-mail do aluno</label>
+          <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="E-mail" required>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Senha do aluno</label>
+          <input type="password" class="form-control" name="senha" id="exampleInputPassword1" placeholder="Senha" required>
         </div>
 
-      </div>
-
-      <div class="panel panel-primary">
-        <div class="panel-heading panel-cadastro">
-          <h2 class="panel-title">Cadastrar Jogo</h2>
-        </div>
-        <div class="panel-body" style="display:none;">
-          Peça pro seu professor cadastrar.
-        </div>
-      </div>
-
-
+        <br />
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+      </form>
 
     </div>
 
+  </div>
 
-    <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/main.js"></script>
-  </body>
-  </html>
+  <div class="panel panel-primary">
+    <div class="panel-heading panel-cadastro">
+      <h2 class="panel-title">Cadastrar Jogo</h2>
+    </div>
+    <div class="panel-body" style="display:none;">
+      Peça pro seu professor cadastrar.
+    </div>
+  </div>
+
+
+
+</div>
+
+
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

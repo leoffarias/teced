@@ -118,6 +118,10 @@
                 <textarea class="form-control" rows="3" id="exampleInputDesc1" name="desc" required></textarea>
               </div>
               <div class="form-group">
+                <label for="exampleInputHab1">Habilidade envolvida</label>
+                <input type="text" class="form-control" name="hab" id="exampleInputHab1" placeholder="Habilidade" required>
+              </div>
+              <div class="form-group">
                 <label for="exampleInputFile">Imagem do jogo</label>
                 <input type="file" id="exampleInputFile">
                 <!--<p class="help-block">Adicione uma imagem sobre o jogo.</p>-->

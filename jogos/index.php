@@ -99,10 +99,20 @@
 
           while($row = $result->fetch_assoc()) {
             if($col == 1) {
-              echo "<tr> <td> <a href='http://tecedu.16mb.com/jogo?id=". $row["id"] . "'><p>". $row["nome"] ."</p><img src='data:image/jpeg;base64,".base64_encode( $row['img'] )."' /> </a></td>";
+              echo "<tr> <td> <a href='http://tecedu.16mb.com/jogo?id=". $row["id"] . "'><p>". $row["nome"] ."</p>";
+
+              if ($row['img'] != "") { echo "<img src='data:image/jpeg;base64,".base64_encode( $row['img'] )."' /> </a></td>"; }
+              else {
+                echo "</a></td>";
+              }
               $col = 2;
             } else {
-              echo "<td><a href='http://tecedu.16mb.com/jogo?id=". $row["id"] . "'><p>" . $row["nome"] . "</p><img src='data:image/jpeg;base64,".base64_encode( $row['img'] )."' /> </a></td></tr>";
+              echo "<td><a href='http://tecedu.16mb.com/jogo?id=". $row["id"] . "'><p>" . $row["nome"] . "</p>";
+              if ($row['img'] != "") {
+                echo "<img src='data:image/jpeg;base64,".base64_encode( $row['img'] )."' /> </a></td></tr>";
+              } else {
+                echo "</a></td></tr>";
+              }
               $col = 1;
             }
           }
