@@ -51,3 +51,8 @@ body {
 	max-width:500px;
 }
 
+.jumb-categorias {
+	background-image: url("../img/cat.jpg");
+	background-size: cover;
+	height:400px;
+}

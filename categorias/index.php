@@ -53,6 +53,9 @@
 
       </header>
 
+      <div class="jumbotron jumb-categorias">
+      </div>
+
       <div class="container">
 
         <div class="page-header">

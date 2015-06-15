@@ -26,7 +26,7 @@
 
     } ?>
 
-<div class="pag capa">
+<div class="pag capa-prof">
 <header>
 
     <nav class="navbar navbar-default">
@@ -58,7 +58,7 @@
 </nav>
 
   </header>
-      <div class="page-title">
+      <div class="page-title-prof page-title">
     <h1>TecEdu<br /><small>Desenvolva habilidades jogando</small></h1>
   </div>
 

@@ -27,10 +27,21 @@ body {
 	background-attachment: fixed;
 }
 
+.capa-prof {
+		background-image: url("../img/bgprof.jpg"); /*Créditos da imagem: https://www.flickr.com/photos/wwworks/4005631298 */
+	background-size: cover;
+	background-attachment: fixed;
+}
+
 .page-title {
 	text-align:center;
 	margin-top:13%;
 	color:white;
+}
+
+.page-title-prof {
+	margin-top:29%;
+	background:rgba(0,0,0,0.5);
 }
 
 .page-title h1 {
