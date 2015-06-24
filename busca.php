@@ -5,8 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Teced</title>    
-  <link href="../css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/interno.css">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/interno.css">
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 
     <!--[if lt IE 9]>
@@ -36,13 +36,15 @@
 
                 <ul class="nav navbar-nav navbar-right">
                   <li><a href="http://tecedu.16mb.com/categorias">Jogos</a></li>
-                  <li>
+                    <li><form method="get" action="http://tecedu.16mb.com/busca.php">
                     <div class="input-group" style="width:200px; padding:6px 12px;">
-                      <input type="text" class="form-control" placeholder="Buscar jogos" style="margin-top:1px;">
+
+                      <input type="text" class="form-control" name="consulta" placeholder="Buscar jogos" style="margin-top:1px;">
                       <span class="input-group-btn">
-                        <button class="btn btn-default glyphicon glyphicon-search" type="button"></button>
+                        <button class="btn btn-default glyphicon glyphicon-search" type="submit"></button>
                       </span>
                     </div><!-- /input-group -->
+                  </form></li>
 
                   </li>
                   <li><a href="http://tecedu.16mb.com/logout/index.php">Sair</a></li>
@@ -66,12 +68,14 @@
 
         }
 
-        
+         /*if (!isset($_GET['consulta'])) {
+          header("Location: http://tecedu.16mb.com/");
+        }*/
+
         $host = "mysql.hostinger.com.br";
         $database = "u160152407_teced";
         $user = "u160152407_leo";
         $password = "123456";
-        $id_prof=$_SESSION['userid'];
 
         $conn = new mysqli($host, $user, $password, $database);
 
@@ -79,51 +83,67 @@
           die("Connection failed: " . mysqli_connect_error());
         }
 
-        $id_tag = $_GET["cat"];
+        $busca = mysqli_real_escape_string($conn, $_GET['consulta']);
 
-        $sql2 = "SELECT t.nome FROM tag t WHERE t.id = '$id_tag'";
+// ============================================
 
-        $result2 = $conn->query($sql2);
+// Registros por página
+$por_pagina = 20;
 
-        $row2 = mysqli_fetch_assoc($result2);
+// Monta a consulta MySQL para saber quantos registros serão encontrados
+$condicoes = "((`nome` LIKE '%{$busca}%') OR ('%{$busca}%'))";
+$sql = "SELECT COUNT(*) AS total FROM `jogo` WHERE {$condicoes}";
+// Salva o valor da coluna 'total', do primeiro registro encontrado pela consulta
+$query = $conn->query($sql);
+while ($resultado2 = mysqli_fetch_assoc($query)) {
+$total = $resultado2['total'];
+}
+// Calcula o máximo de paginas
+$paginas =  (($total % $por_pagina) > 0) ? (int)($total / $por_pagina) + 1 : ($total / $por_pagina);
 
-        echo '<div class="page-header"> <h1>Jogos - '.$row2["nome"].'</h1> </div>';
+// ============================================
 
-        $sql = "SELECT DISTINCT j.id, j.nome, j.img FROM jogo j, jogo_tags jt WHERE j.id = jt.id_jogo AND jt.id_tag = '$id_tag' ";
+if (isset($_GET['pagina'])) {
+  $pagina = (int)$_GET['pagina'];
+} else {
+  $pagina = 1;
+}
+$pagina = max(min($paginas, $pagina), 1);
+$offset = ($pagina - 1) * $por_pagina;
 
-        $result = $conn->query($sql);
+// ============================================
 
-        if ($result->num_rows > 0) {
+// Monta outra consulta MySQL, agora a que fará a busca com paginação
+$sql2 = "SELECT * FROM `jogo` WHERE {$condicoes} LIMIT {$offset}, {$por_pagina}";
+// Executa a consulta
+$query2 = $conn->query($sql2);
 
-          $col = 1;
-          echo '<table class="table categorias">';
+// ============================================
 
-          while($row = $result->fetch_assoc()) {
-            if($col == 1) {
-              echo "<tr> <td> <a href='http://tecedu.16mb.com/jogo?id=". $row["id"] . "'><p>". $row["nome"] ."</p>";
+// Começa a exibição dos resultados
 
-              if ($row['img'] != "") { echo "<img src='data:image/jpeg;base64,".base64_encode( $row['img'] )."' /> </a></td>"; }
-              else {
-                echo "</a></td>";
-              }
-              $col = 2;
-            } else {
-              echo "<td><a href='http://tecedu.16mb.com/jogo?id=". $row["id"] . "'><p>" . $row["nome"] . "</p>";
-              if ($row['img'] != "") {
-                echo "<img src='data:image/jpeg;base64,".base64_encode( $row['img'] )."' /> </a></td></tr>";
-              } else {
-                echo "</a></td></tr>";
-              }
-              $col = 1;
-            }
-          }
-          if($col == 1) {
-            echo "</tr>";
-          }
-          echo '</table>';
-        } else {
-          echo "<p>Não há jogos registrados nesta categoria no momento.</p>";
-        }
+echo "Resultados ".min($total, ($offset + 1))." - ".min($total, ($offset + $por_pagina))." de ".$total." resultados encontrados para '".$_GET['consulta']."'";
+
+echo "<ul>";
+while($resultado3 = $query2->fetch_assoc()) {
+  $nome = $resultado3['nome'];
+  $link = 'http://tecedu.16mb.com/jogo/?id=' . $resultado3['id'];
+  
+  echo "<li>";
+    echo "<a href='{$link}'>";
+      echo "<h3>{$nome}</h3>";
+    echo "</a>";
+  echo "</li>";
+}
+echo "</ul><br /><br />";
+
+// Links de paginação
+// Começa a exibição dos paginadores
+if ($total > 0) {
+  for ($n = 1; $n <= $paginas; $n++) {
+    echo "<a href='busca.php?consulta={$_GET['consulta']}&pagina={$n}'>{$n}</a>";
+  }
+}
         $conn->close();
 
 
@@ -132,8 +152,8 @@
       </div>
 
 
-      <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
-      <script src="../js/bootstrap.min.js"></script>
-      <script src="../js/main.js"></script>
+      <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/main.js"></script>
     </body>
     </html>

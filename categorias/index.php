@@ -37,12 +37,15 @@
                 <ul class="nav navbar-nav navbar-right">
                   <li><a href="http://tecedu.16mb.com/categorias">Jogos</a></li>
                   <li>
+                    <form method="get" action="http://tecedu.16mb.com/busca.php">
                     <div class="input-group" style="width:200px; padding:6px 12px;">
-                      <input type="text" class="form-control" placeholder="Buscar jogos" style="margin-top:1px;">
+
+                      <input type="text" class="form-control" name="consulta" placeholder="Buscar jogos" style="margin-top:1px;">
                       <span class="input-group-btn">
-                        <button class="btn btn-default glyphicon glyphicon-search" type="button"></button>
+                        <button class="btn btn-default glyphicon glyphicon-search" type="submit"></button>
                       </span>
                     </div><!-- /input-group -->
+                  </form>
 
                   </li>
                   <li><a href="http://tecedu.16mb.com/logout/index.php">Sair</a></li>
