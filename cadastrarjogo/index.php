@@ -86,13 +86,25 @@
 
         $desc=$_POST['desc'];
 
-
         $id_prof=$_SESSION['userid'];
+        $foto = $_FILES["jogoimg"];
 
-        if($nome != "" && $link != "" && $desc != "") {
+        if($nome != "" && $link != "" && $desc != "" && $foto != "") {
 
-          $sql = "INSERT INTO jogo (nome, link, descr) VALUES ('$nome', '$link', '$desc')";
 
+           preg_match("/.(gif|bmp|png|jpg|jpeg){1}$/i", $foto["name"], $ext);
+ 
+          // Gera um nome único para a imagem
+          $nome_imagem = md5(uniqid(time())) . "." . $ext[1];
+
+          $caminho_imagem = "fotos/" . $nome_imagem;
+
+          move_uploaded_file($foto["tmp_name"], $caminho_imagem);
+
+
+
+
+          $sql = "INSERT INTO jogo (nome, link, descr, img) VALUES ('$nome', '$link', '$desc', '$nome_imagem')"; 
           if ($conn->query($sql) === TRUE) {
             $id_jogo2 = mysqli_insert_id($conn);
 
@@ -206,7 +218,7 @@
         </div>
         <div class="form-group">
           <label for="exampleInputFile">Imagem do jogo</label>
-          <input type="file" id="exampleInputFile">
+          <input type="file" name="jogoimg" id="jogoimg">
           <!--<p class="help-block">Adicione uma imagem sobre o jogo.</p>-->
         </div>
 

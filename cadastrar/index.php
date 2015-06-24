@@ -104,7 +104,7 @@
           <div class="panel-body" style="display:none;">
 
             <p><strong>Preencha o formulário abaixo:</strong></p><br />
-            <form method="post" action="http://tecedu.16mb.com/cadastrarjogo/index.php">
+            <form method="post" action="http://tecedu.16mb.com/cadastrarjogo/index.php" enctype="multipart/form-data">
               <div class="form-group">
                 <label for="exampleInputNome1">Nome do jogo</label>
                 <input type="text" class="form-control" name="nome" id="exampleInputNome1" placeholder="Nome" required>
@@ -123,13 +123,15 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputFile">Imagem do jogo</label>
-                <input type="file" id="exampleInputFile">
+                <input type="file" name="jogoimg" id="jogoimg">
                 <!--<p class="help-block">Adicione uma imagem sobre o jogo.</p>-->
               </div>
 
               <br />
               <button type="submit" class="btn btn-success">Cadastrar</button>
             </form>
+
+
 
           </div>
         </div>

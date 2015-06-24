@@ -93,7 +93,7 @@
         if ($row != "") {
           echo '<div class="page-header"> <h1>'.$row["nome"].'</h1> </div>';
                     if($row['img'] != "") {
-          echo "<img class='img-jogo' src='data:image/jpeg;base64,".base64_encode( $row['img'] )."' />";
+          echo "<img class='img-jogo' src='http://tecedu.16mb.com/cadastrarjogo/fotos/".$row['img']."' />";
         }
           echo '<p class="descricao-jogo">'.$row["descr"];
 

@@ -105,7 +105,7 @@
             if($col == 1) {
               echo "<tr> <td> <a href='http://tecedu.16mb.com/jogo?id=". $row["id"] . "'><p>". $row["nome"] ."</p>";
 
-              if ($row['img'] != "") { echo "<img src='data:image/jpeg;base64,".base64_encode( $row['img'] )."' /> </a></td>"; }
+              if ($row['img'] != "") { echo "<img src='http://tecedu.16mb.com/cadastrarjogo/fotos/".$row['img']."' /> </a></td>"; }
               else {
                 echo "</a></td>";
               }
@@ -113,7 +113,7 @@
             } else {
               echo "<td><a href='http://tecedu.16mb.com/jogo?id=". $row["id"] . "'><p>" . $row["nome"] . "</p>";
               if ($row['img'] != "") {
-                echo "<img src='data:image/jpeg;base64,".base64_encode( $row['img'] )."' /> </a></td></tr>";
+                echo "<img src='http://tecedu.16mb.com/cadastrarjogo/fotos/".$row['img']."' /> </a></td></tr>";
               } else {
                 echo "</a></td></tr>";
               }

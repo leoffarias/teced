@@ -172,7 +172,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputFile">Imagem do jogo</label>
-              <input type="file" id="exampleInputFile">
+              <input type="file" name="jogoimg" id="jogoimg">
               <!--<p class="help-block">Adicione uma imagem sobre o jogo.</p>-->
             </div>
 
