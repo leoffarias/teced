@@ -16,7 +16,7 @@
     </head>
     <body>
 
-            <?php
+      <?php
 
       session_start();
 
@@ -30,82 +30,82 @@
 
       } ?>
 
-<header>
+      <header>
 
-    <nav class="navbar navbar-default">
-  <div class="container-fluid">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
 
-    <div class="container">
-    <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="http://tecedu.16mb.com/">TecEdu</a>
-    </div>
+            <div class="container">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://tecedu.16mb.com/">TecEdu</a>
+              </div>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Jogos</a></li>
-        <li><a href="#">Saiba mais</a></li>
-        <li><a href="http://tecedu.16mb.com/alunos">Alunos</a></li>
-        <li><a href="http://tecedu.16mb.com/cadastrar">Cadastrar</a></li>
-         <li><a href="http://tecedu.16mb.com/logout/index.php">Sair</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</div>
-</nav>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="http://tecedu.16mb.com/categorias">Jogos</a></li>
+                  <li><a href="#">Saiba mais</a></li>
+                  <li><a href="http://tecedu.16mb.com/alunos">Alunos</a></li>
+                  <li><a href="http://tecedu.16mb.com/cadastrar">Cadastrar</a></li>
+                  <li><a href="http://tecedu.16mb.com/logout/index.php">Sair</a></li>
+                </ul>
+              </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+          </div>
+        </nav>
 
-  </header>
+      </header>
 
-<div class="container">
+      <div class="container">
 
-      <?php
+        <?php
 
-      $host = "mysql.hostinger.com.br";
-      $database = "u160152407_teced";
-      $user = "u160152407_leo";
-      $password = "123456";
+        $host = "mysql.hostinger.com.br";
+        $database = "u160152407_teced";
+        $user = "u160152407_leo";
+        $password = "123456";
 
-      $conn = new mysqli($host, $user, $password, $database);
+        $conn = new mysqli($host, $user, $password, $database);
 
-      if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
+        if (!$conn) {
+          die("Connection failed: " . mysqli_connect_error());
+        }
+
+        $senha=$_POST['senha'];
+        $email=$_POST['email'];
+        $nome=$_POST['nome'];
+        $tipo="aluno";
+        $id_prof=$_SESSION['userid'];
+
+        if($senha != "" && $email != "" && $nome != "") {
+
+          $sql = "INSERT INTO user (nome, email, senha, tipo) VALUES ('$nome', '$email', '$senha', '$tipo')";
+
+          if ($conn->query($sql) === TRUE) {
+           
+
+            $id_aluno = mysqli_insert_id($conn);
+
+            $sql2 = "INSERT INTO relacao (id_prof, id_aluno) VALUES ('$id_prof', '$id_aluno')";
+
+            if ($conn->query($sql2) === TRUE) {
+
+             echo "<div class='alert alert-success' role='alert'>Aluno registrado com sucesso!</div>";
+           }
+           else {
+            echo "<div class='alert alert-danger' role='alert'>Houve um erro ao registrar o aluno</div>";
+          }
+
+        } else {
+          echo "<div class='alert alert-danger' role='alert'>Houve um erro ao registrar o aluno</div>";
+        }
       }
-
-      $senha=$_POST['senha'];
-      $email=$_POST['email'];
-      $nome=$_POST['nome'];
-      $tipo="aluno";
-      $id_prof=$_SESSION['userid'];
-
-      if($senha != "" && $email != "" && $nome != "") {
-
-      $sql = "INSERT INTO user (nome, email, senha, tipo) VALUES ('$nome', '$email', '$senha', '$tipo')";
-
-      if ($conn->query($sql) === TRUE) {
-       
-
-      $id_aluno = mysqli_insert_id($conn);
-
-      $sql2 = "INSERT INTO relacao (id_prof, id_aluno) VALUES ('$id_prof', '$id_aluno')";
-
-      if ($conn->query($sql2) === TRUE) {
-
-       echo "<div class='alert alert-success' role='alert'>Aluno registrado com sucesso!</div>";
-     }
-     else {
-        echo "<div class='alert alert-danger' role='alert'>Houve um erro ao registrar o aluno</div>";
-      }
-
-      } else {
-        echo "<div class='alert alert-danger' role='alert'>Houve um erro ao registrar o aluno</div>";
-      }
-    }
 
 
       ?>
@@ -114,54 +114,82 @@
 
 
 
-          <div class="page-header">
-            <h1>Cadastro</h1>
-          </div>
+      <div class="page-header">
+        <h1>Cadastro</h1>
+      </div>
 
-            <div class="panel panel-primary">
-            <div class="panel-heading panel-cadastro">
-              <h2 class="panel-title">Cadastrar Aluno</h2>
+      <div class="panel panel-primary">
+        <div class="panel-heading panel-cadastro">
+          <h2 class="panel-title">Cadastrar Aluno</h2>
+        </div>
+        <div class="panel-body" style="display:none;">
+          <p><strong>Preencha o formulário abaixo:</strong></p><br />
+          <form method="post" action="http://tecedu.16mb.com/cadastraralunos/index.php">
+            <div class="form-group">
+              <label for="exampleInputNome1">Nome do aluno</label>
+              <input type="text" class="form-control" name="nome" id="exampleInputNome1" placeholder="Nome" required>
             </div>
-            <div class="panel-body" style="display:none;">
-              <p><strong>Preencha o formulário abaixo:</strong></p><br />
-              <form method="post" action="http://tecedu.16mb.com/cadastraralunos/index.php">
-                <div class="form-group">
-                  <label for="exampleInputNome1">Nome do aluno</label>
-                  <input type="text" class="form-control" name="nome" id="exampleInputNome1" placeholder="Nome" required>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">E-mail do aluno</label>
-                  <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="E-mail" required>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Senha do aluno</label>
-                  <input type="password" class="form-control" name="senha" id="exampleInputPassword1" placeholder="Senha" required>
-                </div>
-
-                <br />
-                <button type="submit" class="btn btn-success">Cadastrar</button>
-              </form>
-
+            <div class="form-group">
+              <label for="exampleInputEmail1">E-mail do aluno</label>
+              <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="E-mail" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Senha do aluno</label>
+              <input type="password" class="form-control" name="senha" id="exampleInputPassword1" placeholder="Senha" required>
             </div>
 
-          </div>
-
-          <div class="panel panel-primary">
-            <div class="panel-heading panel-cadastro">
-              <h2 class="panel-title">Cadastrar Jogo</h2>
-            </div>
-            <div class="panel-body" style="display:none;">
-              Peça pro seu professor cadastrar.
-            </div>
-          </div>
-
-
+            <br />
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+          </form>
 
         </div>
 
+      </div>
 
-        <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/main.js"></script>
-      </body>
-      </html>
+      <div class="panel panel-primary">
+        <div class="panel-heading panel-cadastro">
+          <h2 class="panel-title">Cadastrar Jogo</h2>
+        </div>
+        <div class="panel-body" style="display:none;">
+
+          <p><strong>Preencha o formulário abaixo:</strong></p><br />
+          <form method="post" action="http://tecedu.16mb.com/cadastrarjogo/index.php">
+            <div class="form-group">
+              <label for="exampleInputNome1">Nome do jogo</label>
+              <input type="text" class="form-control" name="nome" id="exampleInputNome1" placeholder="Nome" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputLink1">Link do jogo</label>
+              <input type="text" class="form-control" name="link" id="exampleInputLink1" placeholder="Link" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputDesc1">Descrição do jogo</label>
+              <textarea class="form-control" rows="3" id="exampleInputDesc1" name="desc" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputHab1">Habilidade envolvida</label>
+              <input type="text" class="form-control" name="hab" id="exampleInputHab1" placeholder="Habilidade" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputFile">Imagem do jogo</label>
+              <input type="file" id="exampleInputFile">
+              <!--<p class="help-block">Adicione uma imagem sobre o jogo.</p>-->
+            </div>
+
+            <br />
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+          </form>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+    <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+  </html>

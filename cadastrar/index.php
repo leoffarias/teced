@@ -49,7 +49,7 @@
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#">Jogos</a></li>
+                  <li><a href="http://tecedu.16mb.com/categorias">Jogos</a></li>
                   <li><a href="#">Saiba mais</a></li>
                   <li><a href="http://tecedu.16mb.com/alunos">Alunos</a></li>
                   <li><a href="http://tecedu.16mb.com/cadastrar">Cadastrar</a></li>

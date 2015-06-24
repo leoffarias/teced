@@ -35,6 +35,7 @@
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
+                  <li><a href="http://tecedu.16mb.com/categorias">Jogos</a></li>
                   <li>
                     <div class="input-group" style="width:200px; padding:6px 12px;">
                       <input type="text" class="form-control" placeholder="Buscar jogos" style="margin-top:1px;">
@@ -92,7 +93,7 @@
         if ($result->num_rows > 0) {
 
           $col = 1;
-          echo '<table class="table categorias">';
+          echo '<table class="table table-condensed categorias">';
 
           while($row = $result->fetch_assoc()) {
             if($col == 1) {

@@ -35,6 +35,7 @@
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
+                  <li><a href="http://tecedu.16mb.com/categorias">Jogos</a></li>
                   <li>
                     <div class="input-group" style="width:200px; padding:6px 12px;">
                       <input type="text" class="form-control" placeholder="Buscar jogos" style="margin-top:1px;">
@@ -53,7 +54,7 @@
 
       </header>
 
-      <div class="container">
+      <div class="container cont-jogo">
 
         <?php
         
@@ -88,6 +89,9 @@
 
         if ($row != "") {
           echo '<div class="page-header"> <h1>'.$row["nome"].'</h1> </div>';
+                    if($row['img'] != "") {
+          echo "<img class='img-jogo' src='data:image/jpeg;base64,".base64_encode( $row['img'] )."' />";
+        }
           echo '<p class="descricao-jogo">'.$row["descr"];
 
           $sql2 = "SELECT t.nome, t.id FROM tag t, jogo_tags jt WHERE '$id_jogo' = jt.id_jogo AND t.id = jt.id_tag ";
@@ -108,9 +112,6 @@
             echo ".";
           }
           echo '<br /><br /><br /><a class="link-jogar" target="_blank" href="'.$row["link"].'" ><button type="button" class="btn btn-success btn-jogar">Jogar</button></a></p>';
-          if($row['img'] != "") {
-          echo "<img class='img-jogo' src='data:image/jpeg;base64,".base64_encode( $row['img'] )."' />";
-        }
           
         } else {
           echo "<p>Jogo inexistente</p>";

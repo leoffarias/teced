@@ -49,7 +49,7 @@
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#">Jogos</a></li>
+                  <li><a href="http://tecedu.16mb.com/categorias">Jogos</a></li>
                   <li><a href="#">Saiba mais</a></li>
                   <li><a href="http://tecedu.16mb.com/alunos">Alunos</a></li>
                   <li><a href="http://tecedu.16mb.com/cadastrar">Cadastrar</a></li>
@@ -185,7 +185,35 @@
       <h2 class="panel-title">Cadastrar Jogo</h2>
     </div>
     <div class="panel-body" style="display:none;">
-      Peça pro seu professor cadastrar.
+
+      <p><strong>Preencha o formulário abaixo:</strong></p><br />
+      <form method="post" action="http://tecedu.16mb.com/cadastrarjogo/index.php">
+        <div class="form-group">
+          <label for="exampleInputNome1">Nome do jogo</label>
+          <input type="text" class="form-control" name="nome" id="exampleInputNome1" placeholder="Nome" required>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputLink1">Link do jogo</label>
+          <input type="text" class="form-control" name="link" id="exampleInputLink1" placeholder="Link" required>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputDesc1">Descrição do jogo</label>
+          <textarea class="form-control" rows="3" id="exampleInputDesc1" name="desc" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputHab1">Habilidade envolvida</label>
+          <input type="text" class="form-control" name="hab" id="exampleInputHab1" placeholder="Habilidade" required>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputFile">Imagem do jogo</label>
+          <input type="file" id="exampleInputFile">
+          <!--<p class="help-block">Adicione uma imagem sobre o jogo.</p>-->
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+      </form>
+
     </div>
   </div>
 

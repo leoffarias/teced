@@ -49,10 +49,28 @@ body {
 
 .img-jogo {
 	max-width:500px;
+	float:right;
 }
 
 .jumb-categorias {
 	background-image: url("../img/cat.jpg");
 	background-size: cover;
 	height:400px;
+}
+
+@media(max-width:1199px) {
+	.cont-jogo {
+		text-align:center;
+	}
+	.img-jogo {
+		max-width:350px;
+		float:none;
+	}
+	.descricao-jogo {
+		max-width:100%;
+		float:none;
+		margin-right:0;
+		margin-top:40px;
+	}
+	
 }
