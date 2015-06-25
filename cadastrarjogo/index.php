@@ -92,29 +92,29 @@
         if($nome != "" && $link != "" && $desc != "" && $foto != "") {
 
 
-           preg_match("/.(gif|bmp|png|jpg|jpeg){1}$/i", $foto["name"], $ext);
- 
+         preg_match("/.(gif|bmp|png|jpg|jpeg){1}$/i", $foto["name"], $ext);
+
           // Gera um nome único para a imagem
-          $nome_imagem = md5(uniqid(time())) . "." . $ext[1];
+         $nome_imagem = md5(uniqid(time())) . "." . $ext[1];
 
-          $caminho_imagem = "fotos/" . $nome_imagem;
+         $caminho_imagem = "fotos/" . $nome_imagem;
 
-          move_uploaded_file($foto["tmp_name"], $caminho_imagem);
-
-
+         move_uploaded_file($foto["tmp_name"], $caminho_imagem);
 
 
-          $sql = "INSERT INTO jogo (nome, link, descr, img) VALUES ('$nome', '$link', '$desc', '$nome_imagem')"; 
-          if ($conn->query($sql) === TRUE) {
-            $id_jogo2 = mysqli_insert_id($conn);
 
-            $hab=$_POST['hab'];
 
-            $sql2 = "SELECT t.id FROM tag t WHERE t.nome = '$hab' ";
+         $sql = "INSERT INTO jogo (nome, link, descr, img) VALUES ('$nome', '$link', '$desc', '$nome_imagem')"; 
+         if ($conn->query($sql) === TRUE) {
+          $id_jogo2 = mysqli_insert_id($conn);
 
-            $result2 = $conn->query($sql2);
+          $hab=$_POST['hab'];
 
-            $row2 = mysqli_fetch_assoc($result2);
+          $sql2 = "SELECT t.id FROM tag t WHERE t.nome = '$hab' ";
+
+          $result2 = $conn->query($sql2);
+
+          $row2 = mysqli_fetch_assoc($result2);
 
         if ($row2 != "") { // Ja existe, apenas adiciona a relacao com o jogo
 
@@ -129,7 +129,7 @@
          }
 
         } else { // Nao existe, adiciona no bd e adiciona a relacao com o jogo
-          
+
           $sql3 = "INSERT INTO tag (nome) VALUES ('$hab')";
 
           if ($conn->query($sql3) === TRUE) {
@@ -162,6 +162,25 @@
 
   <div class="page-header">
     <h1>Cadastro</h1>
+  </div>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading panel-cadastro">
+      <h2 class="panel-title">Cadastrar Planilha de Alunos</h2>
+    </div>
+    <div class="panel-body" style="display:none;">
+      <form method="post" action="http://tecedu.16mb.com/cadastrarplanilha/index.php" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="exampleInputFile">Planilha</label>
+          <input type="file" name="planilha" id="planilha">
+          <p class="help-block">Os campos devem seguir esse formato: Nome, e-mail, senha.</p>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+      </form>
+
+    </div>
+
   </div>
 
   <div class="panel panel-primary">
@@ -199,7 +218,7 @@
     <div class="panel-body" style="display:none;">
 
       <p><strong>Preencha o formulário abaixo:</strong></p><br />
-      <form method="post" action="http://tecedu.16mb.com/cadastrarjogo/index.php">
+      <form method="post" action="http://tecedu.16mb.com/cadastrarjogo/index.php" enctype="multipart/form-data">
         <div class="form-group">
           <label for="exampleInputNome1">Nome do jogo</label>
           <input type="text" class="form-control" name="nome" id="exampleInputNome1" placeholder="Nome" required>

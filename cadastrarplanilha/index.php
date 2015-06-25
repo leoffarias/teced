@@ -53,7 +53,7 @@
                   <li><a href="#">Saiba mais</a></li>
                   <li><a href="http://tecedu.16mb.com/alunos">Alunos</a></li>
                   <li><a href="http://tecedu.16mb.com/cadastrar">Cadastrar</a></li>
-                  <li><a href="http://tecedu.16mb.com/logout">Sair</a></li>
+                  <li><a href="http://tecedu.16mb.com/logout/index.php">Sair</a></li>
                 </ul>
               </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -64,18 +64,75 @@
 
       <div class="container">
 
+        <?php
+
+        $host = "mysql.hostinger.com.br";
+        $database = "u160152407_teced";
+        $user = "u160152407_leo";
+        $password = "123456";
+
+        $conn = new mysqli($host, $user, $password, $database);
+
+        if (!$conn) {
+          die("Connection failed: " . mysqli_connect_error());
+        }
+        
+        if ($_FILES['planilha']) {
+  //Import uploaded file to Database
+        $handle = fopen($_FILES['planilha']['tmp_name'], "r");
+      
+        $tipo="aluno";
+        $id_prof=$_SESSION['userid'];
+
+        while ($data = fgetcsv($handle,1000,",","'")) {
+          $sql="INSERT into user (nome, email, senha, tipo) values('$data[0]','$data[1]','$data[2]','$tipo')";
+
+            if ($conn->query($sql) === TRUE) {
+
+
+            $id_aluno = mysqli_insert_id($conn);
+
+            $sql2 = "INSERT INTO relacao (id_prof, id_aluno) VALUES ('$id_prof', '$id_aluno')";
+
+            if ($conn->query($sql2) === TRUE) {
+
+             //echo "<div class='alert alert-success' role='alert'>Aluno registrado com sucesso!</div>";
+           }
+           else {
+            //echo "<div class='alert alert-danger' role='alert'>Houve um erro ao registrar o aluno</div>";
+          }
+
+        } else {
+          //echo "<div class='alert alert-danger' role='alert'>Houve um erro ao registrar o aluno</div>";
+        }
+        }
+
+        fclose($handle);
+
+        echo "<div class='alert alert-success' role='alert'>Alunos registrados com sucesso!</div>";
+
+      } else {
+        echo "<div class='alert alert-danger' role='alert'>Houve um erro ao registrar os alunos</div>";
+      }
+        
+
+        ?>
+
+
+
+
 
         <div class="page-header">
           <h1>Cadastro</h1>
         </div>
 
-                <div class="panel panel-primary">
+        <div class="panel panel-primary">
           <div class="panel-heading panel-cadastro">
             <h2 class="panel-title">Cadastrar Planilha de Alunos</h2>
           </div>
           <div class="panel-body" style="display:none;">
             <form method="post" action="http://tecedu.16mb.com/cadastrarplanilha/index.php" enctype="multipart/form-data">
-                            <div class="form-group">
+              <div class="form-group">
                 <label for="exampleInputFile">Planilha</label>
                 <input type="file" name="planilha" id="planilha">
                 <p class="help-block">Os campos devem seguir esse formato: Nome, e-mail, senha.</p>
@@ -150,14 +207,13 @@
               <button type="submit" class="btn btn-success">Cadastrar</button>
             </form>
 
-
-
           </div>
         </div>
 
 
 
       </div>
+
 
       <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
       <script src="../js/bootstrap.min.js"></script>

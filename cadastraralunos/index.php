@@ -88,7 +88,7 @@
           $sql = "INSERT INTO user (nome, email, senha, tipo) VALUES ('$nome', '$email', '$senha', '$tipo')";
 
           if ($conn->query($sql) === TRUE) {
-           
+
 
             $id_aluno = mysqli_insert_id($conn);
 
@@ -116,6 +116,25 @@
 
       <div class="page-header">
         <h1>Cadastro</h1>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading panel-cadastro">
+          <h2 class="panel-title">Cadastrar Planilha de Alunos</h2>
+        </div>
+        <div class="panel-body" style="display:none;">
+          <form method="post" action="http://tecedu.16mb.com/cadastrarplanilha/index.php" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="exampleInputFile">Planilha</label>
+              <input type="file" name="planilha" id="planilha">
+              <p class="help-block">Os campos devem seguir esse formato: Nome, e-mail, senha.</p>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+          </form>
+
+        </div>
+
       </div>
 
       <div class="panel panel-primary">
@@ -153,7 +172,7 @@
         <div class="panel-body" style="display:none;">
 
           <p><strong>Preencha o formulário abaixo:</strong></p><br />
-          <form method="post" action="http://tecedu.16mb.com/cadastrarjogo/index.php">
+          <form method="post" action="http://tecedu.16mb.com/cadastrarjogo/index.php" enctype="multipart/form-data">
             <div class="form-group">
               <label for="exampleInputNome1">Nome do jogo</label>
               <input type="text" class="form-control" name="nome" id="exampleInputNome1" placeholder="Nome" required>
